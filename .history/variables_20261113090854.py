@@ -1,0 +1,2 @@
+NOMBRE_PROYECTO = 'Hundir_la_flota'
+TAMANO_TABLERO=10
