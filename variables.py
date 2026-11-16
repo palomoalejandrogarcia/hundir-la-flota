@@ -5,7 +5,7 @@ MENSAJES_FIJOS = {
     "agua":"Agua", #Cuando el usuario dispara en el agua
     "tocado":"¡Tocado!", #Cuando el usuario da en un barco
     "hundido": "¡Tocado y hundido!", #Cuando el usuario hunde todas las casillas de un barco
-    "repetido": "Ya has disparado en esa casilla", #Cuando el usuario ya ha disparado en una casilla e intenta volver a disparar en esa casilla
+    "repetido": "Ya has disparado en esa casilla, intenta disparar otra vez ", #Cuando el usuario ya ha disparado en una casilla e intenta volver a disparar en esa casilla
     "fuera": "Coordenadas fuera del tablero", #Cuando el usuario dispara fuera del tablero
     "ocupada": "La casilla ya está ocupada", #Cuando el usuario coloca un barco sobre otro
     "victoria": "¡Has ganado!", #Cuando el usuario gana la partida
