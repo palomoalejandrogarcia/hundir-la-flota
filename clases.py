@@ -27,7 +27,7 @@ class Tablero:
         self.barcos = []
 
     def colocar_barcos(self):
-        """Función para colocar barcos de forma aleatoria"""
+        """Función para colocar barcos de forma aleatoria."""
         direccion = [
             (0, 1),
             (0, -1),
@@ -42,7 +42,7 @@ class Tablero:
             while not colocado:
                 vector_direccion = np.array(
                     direccion[np.random.randint(0, 4)])  # elegimos una dirección
-                # elegimos una coordenada donde empezar a pintar
+                # elegimos una coordenada (fila, columna) donde empezar a pintar
                 inicio = np.random.randint(0, TAMANO_TABLERO, size=2)
 
                 barco = []  # la variable contiene las coordenadas que ocupa el barco
@@ -67,6 +67,7 @@ class Tablero:
                         valido = False
                         break
                     barco.append(coord)
+
                 # si todas las casillas son validas
                 if valido:
                     barco_final = [np.array(coord) for coord in barco]
@@ -76,7 +77,7 @@ class Tablero:
                         fila, columna = int(coord[0]), int(coord[1])
                         self.tablero[fila, columna] = SIMBOLOS["barco"]
 
-                        # Añadimos la casilla del barco y las casilla colindantes
+                        # Añadimos la casilla del barco y las casillas colindantes
                         for desplazamiento_fila in (-1, 0, 1):
                             for desplazamiento_col in (-1, 0, 1):
                                 nueva_fila, nueva_col = fila + desplazamiento_fila, columna + desplazamiento_col
@@ -87,45 +88,48 @@ class Tablero:
                     colocado = True
 
     def mostrar(self):
-        """Imprime el tablero en la consola"""
+        """Imprime el tablero en la consola."""
         for fila in self.tablero:
             print(fila)
         print('\n')
 
-    def recibir_disparo(self, fila, columna):
-        """ Dada la fila y columna de la coordenada se retorna si el disparo dio en el agua, un trozo del barco, si lo hundió o si el disparo se repitió
+    def recibir_disparo(self, columna, fila):
+        """Dada la columna (eje horizontal) y fila (eje vertical) de la coordenada,
+        retorna si el disparo dio en el agua, un trozo del barco, si lo hundió
+        o si el disparo se repitió.
 
         Args:
-            fila: parte de la coordenada del barco.
-            columna: parte de la coordenada del barco.
+            columna (int): Coordenada horizontal (eje X), de 0 a TAMANO_TABLERO - 1.
+            fila (int): Coordenada vertical (eje Y), de 0 a TAMANO_TABLERO - 1.
 
-        Return:
-            Retorna los posibles resultados del disparo: agua, tocado, tocado y hundido, repetido.
+        Returns:
+            str: Posibles resultados del disparo: agua, tocado, tocado y hundido,
+                repetido o fuera de rango.
         """
-        # validados que la coordenada este dentro del tablero
+        # Validamos que la coordenada esté dentro del tablero
         if not (
-                fila
-                in range(0, TAMANO_TABLERO) and
-                columna in range(0, TAMANO_TABLERO)):
+                columna in range(0, TAMANO_TABLERO) and
+                fila in range(0, TAMANO_TABLERO)):
             return MENSAJES_FIJOS["fuera"]
 
+        # Internamente indexamos la matriz como [fila, columna]
         casilla_actual = self.tablero[fila, columna]
 
-        # comrpobamos si ya se habia disparado en esa casilla
+        # Comprobamos si ya se había disparado en esa casilla
         if casilla_actual in (SIMBOLOS["tocado"], SIMBOLOS["fallo"]):
             return MENSAJES_FIJOS["repetido"]
 
         # Comprobamos si hay un barco en esa casilla
         if casilla_actual == SIMBOLOS["barco"]:
-            # actualizamos tanto el tablero del jugador como el tablero de disparos que ve el enemigo
+            # Actualizamos tanto el tablero del jugador como el tablero de disparos que ve el enemigo
             self.tablero[fila, columna] = SIMBOLOS["tocado"]
             self.disparos[fila, columna] = SIMBOLOS["tocado"]
             for barco in self.barcos:
-                # Buscamos el barco que tiene ocupa esa casilla
+                # Buscamos el barco que ocupa esa casilla (guardada como [fila, columna])
                 if any(
                         casilla[0] == fila and casilla[1] == columna
                         for casilla in barco):
-                    # Devolvemos True solo si TODAS las casillas del barco están tocadas
+                    # Devolvemos hundido solo si TODAS las casillas del barco están tocadas
                     if all(
                             self.tablero[casilla[0],
                                          casilla[1]] == SIMBOLOS["tocado"]
@@ -133,8 +137,7 @@ class Tablero:
                         return MENSAJES_FIJOS["hundido"]
             return MENSAJES_FIJOS["tocado"]
 
-        # si hemos llegado aqui entonces en la casilla habia agua
+        # Si hemos llegado aquí entonces en la casilla había agua
         self.tablero[fila, columna] = SIMBOLOS["fallo"]
         self.disparos[fila, columna] = SIMBOLOS["fallo"]
         return MENSAJES_FIJOS["agua"]
-
