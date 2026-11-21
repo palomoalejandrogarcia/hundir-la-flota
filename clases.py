@@ -73,10 +73,16 @@ class Tablero:
                     self.barcos.append(barco_final)
 
                     for coord in barco:
-                        c_tuple = tuple(coord)
-                        coordenadas_ocupadas.add(c_tuple)
-                        self.tablero[c_tuple[0], c_tuple[1]
-                                     ] = SIMBOLOS["barco"]
+                        fila, columna = int(coord[0]), int(coord[1])
+                        self.tablero[fila, columna] = SIMBOLOS["barco"]
+
+                        # Añadimos la casilla del barco y las casilla colindantes
+                        for desplazamiento_fila in (-1, 0, 1):
+                            for desplazamiento_col in (-1, 0, 1):
+                                nueva_fila, nueva_col = fila + desplazamiento_fila, columna + desplazamiento_col
+                                # Este if se asegura que no entren las coordenadas colindantes de un barco si estan fuera del tablero
+                                if 0 <= nueva_fila < TAMANO_TABLERO and 0 <= nueva_col < TAMANO_TABLERO:
+                                    coordenadas_ocupadas.add((nueva_fila, nueva_col))
 
                     colocado = True
 
@@ -131,3 +137,4 @@ class Tablero:
         self.tablero[fila, columna] = SIMBOLOS["fallo"]
         self.disparos[fila, columna] = SIMBOLOS["fallo"]
         return MENSAJES_FIJOS["agua"]
+
