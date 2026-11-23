@@ -65,7 +65,7 @@ El método devuelve el texto de `MENSAJES_FIJOS`, como `"Agua"` o `"¡Tocado!"`.
 
 ## Comprobaciones de esta contribución
 
-Verificaciones automatizadas ejecutadas por Codex para la contribución de Dario:
+Comprobaciones de funcionamiento:
 
 - `0,9` devuelve `(0, 9)` con una única petición.
 - `hola`, `3`, `-1,0` y `10,0` producen avisos y permiten terminar con `3,5`.
@@ -89,3 +89,5 @@ Trabajamos en una rama por tarea y proponemos los cambios mediante Pull Request 
 3. Introducir una coordenada válida y explicar el resultado y el cambio o repetición de turno.
 4. Mostrar que el tablero rival mantiene sus barcos ocultos.
 5. Explicar el orden fila/columna, las comprobaciones realizadas y el trabajo con ramas y PR.
+
+La explicación de los cambios y el guion para presentar están en [GUIA_PRESENTACION.md](GUIA_PRESENTACION.md).
