@@ -14,7 +14,6 @@ def disparo_maquina():
         else:
             print(f"Se ha disparado en las siguientes coordenadas x: {x}, y: {y}")
             historial_maquina[len(historial_maquina)+1]=[x,y]
-            #print(historial_maquina)
             return x,y
 # Registra el disparo del usuario en el historial.
 # Si la casilla ya se había disparado, avisa y devuelve None sin guardar nada.
@@ -27,7 +26,6 @@ def disparo_usuario(x,y):
             else:
                 print(f"Se ha disparado en las siguientes coordenadas x: {x}, y: {y}")
                 historial_usuario[len(historial_usuario)+1]=[x,y]
-                #print(historial_usuario)
                 return x,y
     else:
         print(f"Usuario: {variables.MENSAJES_FIJOS['fuera']}")
