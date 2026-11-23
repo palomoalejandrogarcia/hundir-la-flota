@@ -35,7 +35,11 @@ class Tablero:
             (-1, 0)]  # las cuatro direcciones a las que podemos seguir pintando el barco
         coordenadas_ocupadas = set()
 
-        for i in ESLORAS:
+        esloras_partida = []
+        for cantidad, eslora in zip(BARCOS, ESLORAS):
+            esloras_partida.extend([eslora] * cantidad)
+
+        for i in sorted(esloras_partida, reverse=True):
             # variable para saber si el barco encaja y no se sale o solapa con otro barco
             colocado = False
             # Repetimos el intento hasta encontrar una posición válida para el barco
