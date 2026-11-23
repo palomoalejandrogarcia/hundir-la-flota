@@ -12,21 +12,8 @@ from clases import Tablero
 import numpy as np
 
 def pedir_coordenada():
-    """Pide fila y columna al usuario hasta que sean válidas (0-9)."""
-    while True:
-        entrada = input("Introduce fila,columna (0-{v.TAMAÑO_TABLERO - 1}): ")
-        partes = entrada.strip().replace(",", " ").split()
-
-        if len(partes) != 2 or not all (p.isdecimal() for p in partes):
-            print("Entrada no válida. Escribe dos números, por ejemplo: 3,5")
-            continue
-
-        fila, columna = int(partes[0]), int(partes[1])
-        if not (0 <= fila < v.TAMANO_TABLERO and 0 <= columna < v.TAMANO_TABLERO):
-            print(v.MENSAJES_FIJOS["fuera"])
-            continue
-
-        return fila, columna
+    """Mantiene la función de entrada existente usando la validación común."""
+    return f.pedir_coordenadas()
 
 def quedan_barcos(tablero):
     """True si al tablero todavía le queda alguna casilla de barco sin tocar."""
@@ -43,7 +30,7 @@ def mostrar_tableros(tablero_jugador, tablero_maquina):
     print()
 
 def turno_jugador(tablero_jugador, tablero_maquina):
-    """Turno del usuario. Devuelve True si fana la partida con este turno."""
+    """Turno del usuario. Devuelve True si gana la partida con este turno."""
     while True:
         fila, columna = pedir_coordenada()
 
@@ -76,7 +63,9 @@ def turno_maquina(tablero_jugador, tablero_maquina):
             return False
 
 def jugar():
-    f. instrucciones()
+    f.historial_usuario.clear()
+    f.historial_maquina.clear()
+    f.instrucciones()
 
     tablero_jugador = Tablero("jugador")
     tablero_maquina = Tablero("maquina")
